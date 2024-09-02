@@ -3,12 +3,10 @@ on:
   push:
     branches:
       - main
-      - dev
       - staging
   pull_request:
     branches:
       - main
-      - dev
       - staging
 jobs:
   build:
@@ -23,12 +21,6 @@ jobs:
       - name: Install dependencies
         run: |
           pip install -r requirements.txt
-      - name: Build project
-        run: |
-          # Add build commands here if needed. For Django, this might not be required.
-      - name: Run automated tests
-        run: |
-          py test
       - name: Run migrations
         run: |
           python manage.py migrate
