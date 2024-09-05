@@ -74,18 +74,10 @@ WSGI_APPLICATION = 'kolezzaSawaTok.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-import os
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv('kolezza_database'),
-        'USER':os.getenv('kolezza_team_members'),
-        'PASSWORD':os.getenv('kolezza_team'),
-        'HOST':os.getenv('localhost'),
-        'PORT':os.getenv('5432'),
-    }
-}
+try:
+    from .database_config import DATABASES
+except ImportError:
+    DATABASES = {}
 
 
 
