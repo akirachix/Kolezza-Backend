@@ -15,7 +15,7 @@ __pycache__/
 # PyCharm
 .idea/
 
-# Python Packaging
+# Python Packaginga
 *.egg-info/
 dist/
 build/
