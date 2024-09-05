@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
+from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -23,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-0^$5eti&)hg+zrr(obqpvpx#=3wvgu*!ukke@f)+imjm*hifj#'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = True 
 
 ALLOWED_HOSTS = []
 
@@ -74,10 +75,18 @@ WSGI_APPLICATION = 'kolezzaSawaTok.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-try:
-    from .database_config import DATABASES
-except ImportError:
-    DATABASES = {}
+import os
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': config('KOLEZZA_DATABASE'),  
+        'USER': config('KOLEZZA_TEAM_MEMBERS'), 
+        'PASSWORD': config('KOLEZZA_TEAM'), 
+        'HOST': config('DATABASE_HOST', default='localhost'),  
+        'PORT': config('DATABASE_PORT', default='5432'), 
+    }
+}
 
 
 
