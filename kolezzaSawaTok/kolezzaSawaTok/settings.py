@@ -74,7 +74,10 @@ WSGI_APPLICATION = 'kolezzaSawaTok.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-from decouple import config
+# from decouple import config
+
+import decouple 
+config = decouple.config
 
 DATABASES = {
     'default': {
