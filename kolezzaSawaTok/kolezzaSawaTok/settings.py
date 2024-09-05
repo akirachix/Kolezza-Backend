@@ -70,19 +70,23 @@ TEMPLATES = [
 WSGI_APPLICATION = 'kolezzaSawaTok.wsgi.application'
 
 
+
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
+
+from decouple import config
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'kolezza_database',
-        'USER':'kolezza_team_members',
-        'PASSWORD':'kolezza_team',
-        'HOST':'localhost',
-        'PORT':'5432',
+        'NAME': config('kolezza_database'),
+        'USER':config('kolezza_team_members'),
+        'PASSWORD':config('kolezza_team'),
+        'HOST':config('localhost'),
+        'PORT':config('5432'),
     }
 }
+
 
 
 # Password validation
