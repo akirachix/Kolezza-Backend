@@ -10,25 +10,32 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
+import os  # This import was missing
 from pathlib import Path
-from decouple import config
+from dotenv import load_dotenv, find_dotenv
 
+# Load environment definition file
+
+ENV_FILE = find_dotenv()
+if ENV_FILE:
+    load_dotenv(ENV_FILE)
+    
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# TEMPLATE_DIR was defined but not used
+TEMPLATE_DIR = os.path.join(BASE_DIR, "kolezza_app", "templates")
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-0^$5eti&)hg+zrr(obqpvpx#=3wvgu*!ukke@f)+imjm*hifj#'
+SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-0^$5eti&)hg+zrr(obqpvpx#=3wvgu*!ukke@f)+imjm*hifj#')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True 
+DEBUG = os.getenv('DEBUG', 'True') == 'True'
 
-ALLOWED_HOSTS = []
-
-
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 # Application definition
 
 INSTALLED_APPS = [
@@ -55,7 +62,7 @@ ROOT_URLCONF = 'kolezzaSawaTok.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [TEMPLATE_DIR],  # Updated to use TEMPLATE_DIR
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -71,24 +78,19 @@ TEMPLATES = [
 WSGI_APPLICATION = 'kolezzaSawaTok.wsgi.application'
 
 
-
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-import os
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': config('KOLEZZA_DATABASE'),  
-        'USER': config('KOLEZZA_TEAM_MEMBERS'), 
-        'PASSWORD': config('KOLEZZA_TEAM'), 
-        'HOST': config('DATABASE_HOST', default='localhost'),  
-        'PORT': config('DATABASE_PORT', default='5432'), 
+        'ENGINE': 'django.db.backends.postbranchgresql',
+        'NAME': os.getenv('DB_NAME'),
+        'USER': os.getenv('DB_USER'),
+        'PASSWORD': os.getenv('DB_PASSWORD'),
+        'HOST': os.getenv('DB_HOST', 'localhost'),  # Default to localhost if not provided
+        'PORT': os.getenv('DB_PORT', '5432'),  # Default to 5432 for PostgreSQL
     }
 }
-
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
@@ -124,7 +126,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'  # Corrected static URL
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
