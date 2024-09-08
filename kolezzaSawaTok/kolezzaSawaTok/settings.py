@@ -11,8 +11,10 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 import os  # This import was missing
+import logging.config
 from pathlib import Path
 from dotenv import load_dotenv, find_dotenv
+# from dotenv import load_dotenv, find_dotenv
 
 # Load environment definition file
 
@@ -45,6 +47,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'api',
+    'child_module',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -83,7 +88,7 @@ WSGI_APPLICATION = 'kolezzaSawaTok.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postbranchgresql',
+        'ENGINE': 'django.db.backends.postgresql',
         'NAME': os.getenv('DB_NAME'),
         'USER': os.getenv('DB_USER'),
         'PASSWORD': os.getenv('DB_PASSWORD'),
@@ -132,3 +137,37 @@ STATIC_URL = '/static/'  # Corrected static URL
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+# Disable Django's default logging configuration
+LOGGING_CONFIG = None  
+
+LOGGING = {
+    'version': 1,  
+    'disable_existing_loggers': False,  
+    'formatters': {
+        'default': {  
+            'format': '%(asctime)s %(name)s %(levelname)s %(message)s',  
+        },
+    },
+    'handlers': {
+        'console': {  
+            'class': 'logging.StreamHandler',  
+            'formatter': 'default',  
+        },
+    },
+    'loggers': {
+        'django': {  
+            'handlers': ['console'],  
+            'level': os.getenv('DJANGO_LOG_LEVEL', 'INFO'), 
+            'propagate': True,  
+        },
+        'child_module': {  
+            'handlers': ['console'],  
+            'level': 'DEBUG',  
+            'propagate': False,  
+        },
+    },
+}
+
+logging.config.dictConfig(LOGGING)
