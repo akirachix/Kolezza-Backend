@@ -10,7 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
-import os  # This import was missing
+import os  
 from pathlib import Path
 from dotenv import load_dotenv, find_dotenv
 
@@ -45,7 +45,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'users',
+    'rest_framework',
+    'authentication',
+    
 ]
+
+AUTH_USER_MODEL = 'users.User'
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -83,7 +90,7 @@ WSGI_APPLICATION = 'kolezzaSawaTok.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postbranchgresql',
+        'ENGINE': 'django.db.backends.postgresql',
         'NAME': os.getenv('DB_NAME'),
         'USER': os.getenv('DB_USER'),
         'PASSWORD': os.getenv('DB_PASSWORD'),
@@ -132,3 +139,17 @@ STATIC_URL = '/static/'  # Corrected static URL
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Auth0 settings
+AUTH0_CLIENT_ID = 'w7BRXseEalf4dvOjNteOt9ablWiMFida'
+AUTH0_CLIENT_SECRET = 'cOTJPEVGslBksFPylG4JYa-L7Nr_FtSRPKKuzJ4dpc710vZQPx9jg2efXEoNoVal'
+AUTH0_DOMAIN = 'dev-wzcih6r6mtijgxr1.us.auth0.com'
+
+REDIRECT_URI = 'http://localhost:8080/auth/callback/'
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ]
+}
