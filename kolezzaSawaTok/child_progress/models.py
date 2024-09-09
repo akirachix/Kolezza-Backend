@@ -1,5 +1,7 @@
 from django.db import models
 
+from level_of_stuttering.models import LevelOfStuttering
+
 # Create your models here.
 # Create your models here.
 class ChildProgress(models.Model):
@@ -16,5 +18,7 @@ class ChildProgress(models.Model):
     id = models.AutoField(primary_key=True)
     started_module_at = models.DateField()
     finished_module_at = models.DateField()
+    current_level_of_stuttering_id = models.ForeignKey(LevelOfStuttering, on_delete=models.CASCADE, related_name='level_of_stuttering')
+
     def __str__(self):
         return f"Progress for Module: {self.started_module_at} - Stuttering Level: {self.finished_module_at}"
