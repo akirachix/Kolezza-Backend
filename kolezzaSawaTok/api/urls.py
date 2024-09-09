@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import UserListView, UserDetailView, RegisterView, YourProtectedView, LoginView
+from .views import UserListView, UserDetailView, RegisterView, LoginView
 from .views import CreateAdminUser
 
 
@@ -26,12 +26,6 @@ urlpatterns = [
         name="register_view"  
     ),
 
-    # URL pattern for protected view (example)
-    path(
-        'authorization/',
-        YourProtectedView.as_view(),
-        name="protected_view"
-    ),
     
     # URL pattern for login
     path(
