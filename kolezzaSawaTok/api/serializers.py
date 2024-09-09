@@ -1,12 +1,8 @@
-
-
 from rest_framework import serializers
 from users.models import User
 
 class UserSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)  # Ensure password is write-only
-    is_superuser = serializers.BooleanField(required=False)
-    is_speech_therapist = serializers.BooleanField(required=False)
 
     class Meta:
         model = User
