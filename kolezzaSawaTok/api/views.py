@@ -5,10 +5,9 @@ from rest_framework.views import APIView
 from django.contrib.auth import authenticate
 from users.models import User
 from .serializers import UserSerializer
-from users.permissions import IsAuthenticatedAndHasPermission
 from django.contrib.auth import authenticate, login as django_login
 from rest_framework import status
-from rest_framework.permissions import AllowAny,IsAuthenticated
+from rest_framework.permissions import AllowAny
 
 
 
@@ -61,9 +60,6 @@ class UserDetailView(APIView):
             return Response({'error': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
         
 
-# RegisterView Class:
-# Handles user registration by accepting POST requests with user data, saving the new user,
-# and returning the result or validation errors.
 class RegisterView(APIView):
     # Method to handle POST requests for user registration
     def post(self, request):
@@ -73,17 +69,7 @@ class RegisterView(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-
-
-
-
-class YourProtectedView(APIView):
-    permission_classes = [IsAuthenticatedAndHasPermission]
-
-    def get(self, request, *args, **kwargs):
-        # Your view logic here
-        return Response({"message": "You have access to this view!"})
-    
+  
 
 class LoginView(APIView):
     permission_classes = [AllowAny]

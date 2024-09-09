@@ -143,12 +143,10 @@ STATIC_URL = '/static/'  # Corrected static URL
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Auth0 settings
-AUTH0_CLIENT_ID = 'w7BRXseEalf4dvOjNteOt9ablWiMFida'
-AUTH0_CLIENT_SECRET = 'cOTJPEVGslBksFPylG4JYa-L7Nr_FtSRPKKuzJ4dpc710vZQPx9jg2efXEoNoVal'
-AUTH0_DOMAIN = 'dev-wzcih6r6mtijgxr1.us.auth0.com'
-
-REDIRECT_URI = 'http://localhost:8080/auth/callback/'
-
+AUTH0_CLIENT_ID = os.getenv('AUTH0_CLIENT_ID')
+AUTH0_CLIENT_SECRET = os.getenv('AUTH0_CLIENT_SECRET')
+AUTH0_DOMAIN = os.getenv('AUTH0_DOMAIN')
+REDIRECT_URI = os.getenv('REDIRECT_URI')
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
