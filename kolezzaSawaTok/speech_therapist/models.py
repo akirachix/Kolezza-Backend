@@ -16,6 +16,8 @@ class Speech_Therapist(models.Model):
    id = models.AutoField(primary_key=True)  
    hospital_name = models.CharField(max_length=28) 
    phone_number = models.CharField(max_length=28)
+   profile_picture = models.ImageField()
+   role = models.CharField(max_length=28)
    is_active = models.BooleanField(default=True)  
    updated_at = models.DateTimeField(null=True, blank=True)
      

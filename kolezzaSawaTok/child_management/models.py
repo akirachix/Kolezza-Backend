@@ -17,6 +17,8 @@ class Child_Management(models.Model):
     
     id = models.AutoField(primary_key=True)  
     first_name = models.CharField(max_length=28)  
+    middle_name =models.CharField(max_length=28)
+    gender = models.CharField(max_length=28)
     last_name = models.CharField(max_length=28)    
     date_of_birth = models.DateField()    
     is_active = models.BooleanField(default=True)    
