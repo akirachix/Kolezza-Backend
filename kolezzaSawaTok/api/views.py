@@ -8,6 +8,7 @@ from .serializers import UserSerializer
 from django.contrib.auth import authenticate, login as django_login
 from rest_framework import status
 from rest_framework.permissions import AllowAny
+from users.permissions import IsAuthenticatedAndHasPermission
 
 
 
@@ -69,7 +70,14 @@ class RegisterView(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-  
+class YourProtectedView(APIView):
+    permission_classes = [IsAuthenticatedAndHasPermission]
+
+    def get(self, request, *args, **kwargs):
+        # Your view logic here
+        return Response({"message": "You have access to this view!"})
+
+
 
 class LoginView(APIView):
     permission_classes = [AllowAny]
