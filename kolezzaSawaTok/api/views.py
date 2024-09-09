@@ -6,7 +6,10 @@ from django.contrib.auth import authenticate
 from users.models import User
 from .serializers import UserSerializer
 from users.permissions import IsAuthenticatedAndHasPermission
-from users.permissions import IsAuthenticatedAndHasPermission
+from django.contrib.auth import authenticate, login as django_login
+from rest_framework import status
+from rest_framework.permissions import AllowAny,IsAuthenticated
+
 
 
 # UserListView Class:
@@ -80,4 +83,40 @@ class YourProtectedView(APIView):
     def get(self, request, *args, **kwargs):
         # Your view logic here
         return Response({"message": "You have access to this view!"})
+    
+
+class LoginView(APIView):
+    permission_classes = [AllowAny]
+
+    def post(self, request, *args, **kwargs):
+        username = request.data.get('username')
+        password = request.data.get('password')
+
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            django_login(request, user)
+            return Response({"detail": "Login successful"}, status=status.HTTP_200_OK)
+        return Response({"detail": "Invalid credentials"}, status=status.HTTP_400_BAD_REQUEST)
+    
+
+
+class CreateAdminUser(APIView):
+    permission_classes = [AllowAny] 
+
+    def post(self, request):
+        username = request.data.get('username')
+        password = request.data.get('password')
+        email = request.data.get('email', '')
+        first_name = request.data.get('firstname')
+        last_name = request.data.get('lastname')
+
+
+        if not User.objects.filter(username=username).exists():
+            User.objects.create_superuser(first_name=first_name, last_name=last_name, username=username, email=email, password=password)
+            return Response({"detail": "Superuser created successfully"}, status=status.HTTP_201_CREATED)
+        return Response({"detail": "Superuser already exists"}, status=status.HTTP_400_BAD_REQUEST)
+    
+
+
+
 

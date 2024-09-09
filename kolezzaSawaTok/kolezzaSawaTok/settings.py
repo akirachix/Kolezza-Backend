@@ -62,6 +62,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+
 ]
 
 ROOT_URLCONF = 'kolezzaSawaTok.urls'
@@ -69,7 +71,7 @@ ROOT_URLCONF = 'kolezzaSawaTok.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [TEMPLATE_DIR],  # Updated to use TEMPLATE_DIR
+        'DIRS': [TEMPLATE_DIR],  
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
