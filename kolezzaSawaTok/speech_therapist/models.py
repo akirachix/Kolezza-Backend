@@ -29,9 +29,5 @@ class Speech_Therapist(models.Model):
      self.updated_at = timezone.now()
      self.save()  
      
-   def restore(self):
-        self.is_deleted = False
-        self.deleted_at = None
-        self.save()
 
    
