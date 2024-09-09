@@ -10,9 +10,12 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
+import os  # This import was missing
+import logging.config
 import os  
 from pathlib import Path
 from dotenv import load_dotenv, find_dotenv
+# from dotenv import load_dotenv, find_dotenv
 
 # Load environment definition file
 ENV_FILE = find_dotenv()
@@ -28,7 +31,7 @@ TEMPLATE_DIR = os.path.join(BASE_DIR, "kolezza_app", "templates")
 # Security settings
 SECRET_KEY = os.getenv('SECRET_KEY', 'your-default-secret-key')
 DEBUG = os.getenv('DEBUG', 'True') == 'True'
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
+ALLOWED_HOSTS = []
 
 # Application definition
 INSTALLED_APPS = [
@@ -38,7 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'api',
+    'child_module',
     'guardian',
     'level_of_stuttering',
     'users',

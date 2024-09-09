@@ -1,4 +1,8 @@
 from django.urls import path
+from .views import ChildModuleListView
+from .views import ChildModuleDetailView
+from .views import UserListView, UserDetailView, RegisterView, LoginView
+from .views import CreateAdminUser
 from .views import (
     GuardianListAllView,
     LevelOfStutteringListCreateView,
@@ -6,9 +10,6 @@ from .views import (
     GuardianListCreateView,
     GuardianDetailView,
 )
-from .views import UserListView, UserDetailView, RegisterView, LoginView
-from .views import CreateAdminUser
-
 
 # URL patterns for user-related views
 urlpatterns = [
@@ -51,4 +52,10 @@ urlpatterns = [
     path('guardians/', GuardianListCreateView.as_view(), name='guardians-list-create'),
     path('guardians/all/', GuardianListAllView.as_view(), name='guardians-list-all'), 
     path('guardian/<int:id>/', GuardianDetailView.as_view(), name='guardian-detail'),
+     # Route for listing all child modules; mapped to the ChildModuleListView
+    path('child_modules/', ChildModuleListView.as_view(), name='child_module_list_view'),
+    
+    # Route for retrieving, updating, or deleting a specific child module by ID; mapped to the ChildModuleDetailView
+    path('child_module/<int:id>/', ChildModuleDetailView.as_view(), name='child_module_detail_view'),
 ]
+
