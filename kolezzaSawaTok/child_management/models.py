@@ -1,6 +1,9 @@
 from django.db import models
 from django.utils import timezone
 
+from child_module.models import ChildModule
+from level_of_stuttering.models import LevelOfStuttering
+
 """This model is meant to be used by the therapist to onboard a 
 particular child to the database. 
 Auto-incrementing primary key for each child
@@ -23,6 +26,10 @@ class Child_Management(models.Model):
     date_of_birth = models.DateField()    
     is_active = models.BooleanField(default=True)    
     updated_at = models.DateTimeField(null=True, blank=True)   
+    level_of_stuttering_id = models.ForeignKey(LevelOfStuttering,on_delete=models.CASCADE,related_name='child_management_level')
+    chiild_id = models.ForeignKey(ChildModule,on_delete=models.CASCADE,related_name='child_module_level' )
+
+
 
     def soft_delete(self):
         self.is_updated = True  
