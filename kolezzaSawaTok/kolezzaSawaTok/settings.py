@@ -41,11 +41,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'speech_therapist',
+    'child_management',
+    'rest_framework',
     'child_module',
     'guardian',
     'level_of_stuttering',
     'users',
-    'rest_framework',
 ]
 
 AUTH_USER_MODEL = 'users.User'
