@@ -1,4 +1,5 @@
 from django.db import models
+from level_of_stuttering.models import LevelOfStuttering
 
 '''
 the class is for childModule it has the following attributes:
@@ -14,7 +15,7 @@ class ChildModule(models.Model):
     description = models.CharField(max_length=50)
     duration = models.DurationField()
     module_level=models.PositiveSmallIntegerField()
-    # level_of_stuttering_id = models.ForeignKey(Level_of_Stuttering, on_delete=models.CASCADE, related_name='assigned_level_of_stuttering')
+    level_of_stuttering_id = models.ForeignKey(LevelOfStuttering, on_delete=models.CASCADE, related_name='assigned_level_of_stuttering')
 
 #String representation: The __str__ method defines the string representation of the ChildModule instance. In this case, it returns the duration of the child module.
     def __str__(self):
