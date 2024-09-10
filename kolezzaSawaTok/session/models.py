@@ -1,6 +1,8 @@
 from django.db import models
 from datetime import datetime, timedelta
 
+from child_progress.models import ChildProgress
+
 class Session(models.Model):
     
     """Represents a speech session for children using the device
@@ -9,11 +11,12 @@ class Session(models.Model):
     Calculate duration
     Set duration to zero if end time is before start time
     Save session data to the database"""
-    
+    id = models.AutoField(primary_key=True)
     session_date = models.DateField()
     session_start_time = models.TimeField()
     session_end_time = models.TimeField()
     duration = models.DurationField(null=True, blank=True)
+    child_progress = models.ForeignKey(ChildProgress, on_delete=models.CASCADE, related_name='sessions')
 
     def __str__(self):
         return f"Session from {self.session_start_time} to {self.session_end_time}"
