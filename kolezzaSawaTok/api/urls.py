@@ -1,4 +1,5 @@
 from django.urls import path
+from .views import ChildProgressListView, ChildProgressDetailView
 from .views import SpeechTherapistDetailView, ChildManagementDetailView
 from .views import SpeechTherapistListView, ChildManagementListView
 from .views import RegisterChildView, RegisterTherapistView
@@ -83,6 +84,10 @@ urlpatterns = [
     path(
         'child/<int:id>/restore/', ChildManagementDetailView.as_view(), name="child_restore_view"
         ),
-
+    # For listing and creating child progress records
+    path('api/child-progress/', ChildProgressListView.as_view(), name='child_progress_list'),
+    # For retrieving, updating, and deleting a specific child progress record
+    path('api/child-progress/<int:pk>/', ChildProgressDetailView.as_view(), name='child_progress_detail'),
 ]
+
 

@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'guardian',
     'level_of_stuttering',
     'users',
+    'child_progress',
 ]
 
 AUTH_USER_MODEL = 'users.User'

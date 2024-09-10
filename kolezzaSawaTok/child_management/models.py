@@ -27,7 +27,7 @@ class Child_Management(models.Model):
     is_active = models.BooleanField(default=True)    
     updated_at = models.DateTimeField(null=True, blank=True)   
     level_of_stuttering_id = models.ForeignKey(LevelOfStuttering,on_delete=models.CASCADE,related_name='child_management_level')
-    chiild_id = models.ForeignKey(ChildModule,on_delete=models.CASCADE,related_name='child_module_level' )
+    childmodule_id = models.ForeignKey(ChildModule, on_delete=models.CASCADE, related_name='child_progress')    
 
     def soft_delete(self):
         self.is_updated = True  

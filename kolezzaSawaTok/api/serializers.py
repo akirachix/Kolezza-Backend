@@ -1,8 +1,16 @@
 from rest_framework import serializers
+from child_progress.models import ChildProgress
 from child_management.models import Child_Management
 from speech_therapist.models import Speech_Therapist
+from child_module.models import ChildModule
+from users.models import User
+from guardian.models import Guardian
+from level_of_stuttering.models import LevelOfStuttering
 
-from rest_framework import serializers
+class ChildProgressSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ChildProgress
+        fields = '__all__'
 
 """Serializer for the Speech_Therapist model
 Specifies the model to be serialized
@@ -21,11 +29,6 @@ class ChildManagementSerializer(serializers.ModelSerializer):
     class Meta:
         model = Child_Management  
         fields = "__all__"  
-from child_module.models import ChildModule
-from users.models import User
-from guardian.models import Guardian
-from level_of_stuttering.models import LevelOfStuttering
-
 '''
 Serializer for the ChildModule model
 This serialize converts ChildModule model instances into JSON format
@@ -85,6 +88,8 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['id', 'username', 'first_name', 'last_name', 'password', 'is_superuser', 'is_speech_therapist']
+
+class GuardianSerializer(serializers.ModelSerializer):
 
     def roleValidation(self, data):
         is_superuser = data.get('is_superuser', False)
