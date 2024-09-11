@@ -1,12 +1,13 @@
-from django.shortcuts import render
-from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework.response import Response
 from rest_framework import status
+from session.models import Session
+from .serializers import SessionSerializer
+from django.shortcuts import render
 import logging
 from child_progress.models import ChildProgress
 from .serializers import ChildProgressSerializer
 from django.core.exceptions import ValidationError
-import logging
 from rest_framework import serializers
 from child_management.models import Child_Management
 from speech_therapist.models import Speech_Therapist
@@ -20,14 +21,18 @@ from django.contrib.auth import authenticate, login as django_login
 from users.models import User
 from rest_framework.permissions import AllowAny
 from users.permissions import IsAuthenticatedAndHasPermission
-from session.models import Session
-from .serializers import SessionSerializer
 from rest_framework.authtoken.models import Token
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.conf import settings
 
 
 logger = logging.getLogger('session')
+class SessionListView(APIView):
+    '''View for listing all sessions, retrieving a specific session and creating a new session.'''
+
+
+logger = logging.getLogger('session')
+
 class SessionListView(APIView):
     '''View for listing all sessions, retrieving a specific session and creating a new session.'''
     def get(self, request, session_id=None):
@@ -59,7 +64,6 @@ class SessionListView(APIView):
         else:
             logger.warning("Failed to create this sessionbecause of validation errors: %s", serializer.errors)
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-        
 # Set up logging
 logger = logging.getLogger(__name__)
 """List and create child progress records
