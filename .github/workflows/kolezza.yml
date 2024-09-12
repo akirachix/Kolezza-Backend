@@ -14,33 +14,30 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-        
       - name: Set up Python
         uses: actions/setup-python@v3
         with:
           python-version: '3.10'
-          
-      - name: Install dependencies
+      # Updated Install dependencies step to clone the repository and checkout specific branch
+      - name: Clone the repository and checkout specific branch
         run: |
+          git clone https://github.com/akirachix/Kolezza-Backend.git
+          cd Kolezza-Backend
+          git checkout dev  # Replace 'dev' with the correct branch name
           pip install -r requirements.txt
-          
       - name: Install Black
         run: |
           pip install black
-          
       - name: Check code formatting with Black
         id: action_black
         run: |
           black --check .
-        
       - name: Run migrations
         run: |
           python manage.py migrate
-          
       - name: Run tests
         run: |
           python manage.py test
-          
       - name: Create Pull Request if Black Reformats
         if: steps.action_black.outcome == 'failure'
         uses: peter-evans/create-pull-request@v3
@@ -51,4 +48,3 @@ jobs:
           body: "This pull request formats the code using Black."
           base: ${{ github.head_ref }}
           branch: actions/black
-
