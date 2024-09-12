@@ -3,3 +3,5 @@ Django==5.1
 psycopg2-binary==2.9.9
 sqlparse==0.5.1
 typing_extensions==4.12.2
+djangorestframework-simplejwt==5.2.2
+
