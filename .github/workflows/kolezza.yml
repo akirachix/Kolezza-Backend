@@ -8,7 +8,7 @@ on:
     branches:
       - main
       - staging
-jobs:
+  jobs:
   build:
     runs-on: ubuntu-latest
     steps:
@@ -19,7 +19,7 @@ jobs:
         with:
           python-version: '3.10'
       # Updated Install dependencies step to clone the repository and checkout specific branch
-      - name: Install dependencies
+      - name: Install Dependencies 
         run: |
           pip install -r kolezzaSawaTok/requirements.txt
       - name: Install Black
@@ -29,10 +29,10 @@ jobs:
         id: action_black
         run: |
           black .
-       
       - name: Run migrations
         run: |
           python kolezzaSawaTok/manage.py migrate
       - name: Run tests
         run: |
           python kolezzaSawaTok/manage.py test
+    
