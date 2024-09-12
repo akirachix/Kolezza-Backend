@@ -21,10 +21,7 @@ jobs:
       # Updated Install dependencies step to clone the repository and checkout specific branch
       - name: Clone the repository and checkout specific branch
         run: |
-          git clone https://github.com/akirachix/Kolezza-Backend.git
-          cd Kolezza-Backend
-          git checkout dev  # Replace 'dev' with the correct branch name
-          pip install -r requirements.txt
+          pip install -r kolezzaSawaTok/requirements.txt
       - name: Install Black
         run: |
           pip install black
