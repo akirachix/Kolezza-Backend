@@ -22,7 +22,7 @@ jobs:
           
       - name: Install dependencies
         run: |
-          pip install -r requirements.txt
+          pip install -r config/requirements.txt
           
       - name: Install Black
         run: |
