@@ -31,7 +31,7 @@ jobs:
       - name: Check code formatting with Black
         id: action_black
         run: |
-          black ..
+          black .
         
       - name: Run migrations
         run: |
