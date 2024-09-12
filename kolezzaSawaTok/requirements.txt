@@ -25,3 +25,4 @@ typing_extensions==4.12.2
 urllib3==2.2.2
 Authlib~=1.0.0
 python-dotenv~=0.19.2
+black==24.8.0

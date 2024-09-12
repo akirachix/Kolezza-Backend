@@ -1,5 +1,6 @@
 from django.db import models
 
+
 class GuardianManager(models.Manager):
     def get_queryset(self):
         # Only return active guardians by default
@@ -8,6 +9,7 @@ class GuardianManager(models.Manager):
     def all_with_deleted(self):
         # Return all guardians, including soft-deleted ones
         return super().get_queryset()
+
 
 class Guardian(models.Model):
     """
@@ -22,12 +24,13 @@ class Guardian(models.Model):
     A boolean flag indicating whether the guardian is active (soft deletion)
 
     """
-    id = models.AutoField(primary_key=True) 
-    first_name = models.CharField(max_length=100)  
-    middle_name = models.CharField(max_length=100) 
-    last_name = models.CharField(max_length=100)  
-    phone_number = models.CharField(max_length=15, unique=True)   
-    address = models.CharField(max_length=255)   
+
+    id = models.AutoField(primary_key=True)
+    first_name = models.CharField(max_length=100)
+    middle_name = models.CharField(max_length=100)
+    last_name = models.CharField(max_length=100)
+    phone_number = models.CharField(max_length=15, unique=True)
+    address = models.CharField(max_length=255)
     is_active = models.BooleanField(default=True)
 
     # Use the custom manager
@@ -41,4 +44,4 @@ class Guardian(models.Model):
         self.save_guardian()
 
     def save_guardian(self):
-        self.save()  
+        self.save()

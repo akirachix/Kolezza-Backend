@@ -1,5 +1,6 @@
 from django.db import models
 
+
 # Create your models here.
 class LevelOfStuttering(models.Model):
     """
@@ -10,10 +11,12 @@ class LevelOfStuttering(models.Model):
     A text field providing a detailed description of the stuttering type
     A duration field to record how long the stuttering has been occurring
     """
-    id = models.AutoField(primary_key=True)  
-    type_of_stuttering = models.CharField(max_length=100)  
-    description = models.TextField()  
-    duration = models.DurationField()  
+
+    id = models.AutoField(primary_key=True)
+    type_of_stuttering = models.CharField(max_length=100)
+    description = models.TextField()
+    duration = models.DurationField(null=True, blank=True)
+
     def __str__(self):
         """
         Return a string representation of the LevelOfStuttering, showing the type of stuttering.
