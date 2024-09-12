@@ -42,6 +42,4 @@ jobs:
           python manage.py test
           
      
-          base: ${{ github.head_ref }}
-          branch: actions/black
 
