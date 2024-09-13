@@ -1,1 +1,1 @@
-web: gunicorn kolezzaSawaTok.wsgi --log-file -
+web: gunicorn kolezzaSawaTok.kolezzaSawaTok.wsgi --log-file -
