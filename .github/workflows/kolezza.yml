@@ -29,10 +29,12 @@ jobs:
         id: action_black
         run: |
           black .
+      - name: List files
+        run: ls -R
       - name: Run migrations
         run: |
-          python Kolezza-Backend/manage.py migrate
+          python manage.py migrate
       - name: Run tests
         run: |
-          python Kolezza-Backend/manage.py test
+          python manage.py test
     
