@@ -142,6 +142,13 @@ AUTH_PASSWORD_VALIDATORS = [
         "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
     },
 ]
+# Auth0 Configuration
+
+AUTH0_DOMAIN = os.environ.get("AUTH0_DOMAIN","")
+AUTH0_CLIENT_ID = os.environ.get("AUTH0_CLIENT_ID","")
+AUTH0_CLIENT_SECRET = os.environ.get("AUTH0_CLIENT_SECRET","")
+# Redirect URI
+REDIRECT_URI = os.environ.get("REDIRECT_URI","")
 
 # Internationalization
 LANGUAGE_CODE = "en-us"
