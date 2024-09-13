@@ -33,7 +33,7 @@ TEMPLATE_DIR = os.path.join(BASE_DIR, "kolezza_app", "templates")
 # Security settings
 SECRET_KEY = os.getenv("SECRET_KEY", "your-default-secret-key")
 DEBUG = os.getenv("DEBUG", "True") == "True"
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["localhost", "django-github-6cbf23e36b5b.herokuapp.com"]
 
 # Application definition
 INSTALLED_APPS = [
