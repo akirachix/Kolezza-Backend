@@ -16,6 +16,7 @@ import logging.config
 from datetime import timedelta
 from pathlib import Path
 from dotenv import load_dotenv, find_dotenv
+import django_heroku
 
 # from dotenv import load_dotenv, find_dotenv
 
@@ -33,7 +34,7 @@ TEMPLATE_DIR = os.path.join(BASE_DIR, "kolezza_app", "templates")
 # Security settings
 SECRET_KEY = os.getenv("SECRET_KEY", "your-default-secret-key")
 DEBUG = os.getenv("DEBUG", "True") == "True"
-ALLOWED_HOSTS = ["localhost", "django-github-6cbf23e36b5b.herokuapp.com"]
+ALLOWED_HOSTS = ["*"]
 
 # Application definition
 INSTALLED_APPS = [
@@ -70,6 +71,8 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
+    
 ]
 
 ROOT_URLCONF = "kolezzaSawaTok.urls"
@@ -137,7 +140,7 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 STATIC_URL = "/static/"
-
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 # Default primary key field type
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
