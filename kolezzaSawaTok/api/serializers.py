@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from session.models import Session
 from child_progress.models import ChildProgress
 from child_management.models import Child_Management
 from speech_therapist.models import Speech_Therapist
@@ -8,6 +9,7 @@ from guardian.models import Guardian
 from level_of_stuttering.models import LevelOfStuttering
 from session.models import Session
 # Other serializers for related models
+
 class SessionSerializer(serializers.ModelSerializer):
     class Meta:
         '''Meta class to define model-specific settings for the serializer'''
@@ -15,6 +17,7 @@ class SessionSerializer(serializers.ModelSerializer):
         '''Specifies the model to serialize'''
         fields = "__all__"
         '''Include all fields from the Session model in the serialization'''
+        
 class ChildProgressSerializer(serializers.ModelSerializer):
     class Meta:
         model = ChildProgress

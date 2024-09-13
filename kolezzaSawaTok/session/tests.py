@@ -67,8 +67,3 @@ class SessionModelTest(TestCase):
         with self.assertRaises(IntegrityError):
             incomplete_session.save()
 
-
-
-
-
-   

@@ -93,6 +93,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "kolezzaSawaTok.wsgi.application"
 
+
 # Database configuration
 # DATABASES = {
 #     "default": {
@@ -104,6 +105,7 @@ WSGI_APPLICATION = "kolezzaSawaTok.wsgi.application"
 #         "PORT": os.getenv("DB_PORT", "5432"),
 #     }
 # }
+
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
@@ -133,13 +135,6 @@ TIME_ZONE = "UTC"
 USE_I18N = True
 USE_TZ = True
 
-# REST_FRAMEWORK = {
-#     'DEFAULT_AUTHENTICATION_CLASSES': [
-#         'rest_framework.authentication.TokenAuthentication',  
-#     ],
-# }
-
-
 # Static files (CSS, JavaScript, Images)
 STATIC_URL = "/static/"
 
@@ -166,8 +161,3 @@ SIMPLE_JWT = {
     'AUTH_COOKIE_PATH': '/',        # Cookie available site-wide
     'AUTH_COOKIE_SAMESITE': 'Lax',  # Adjust SameSite settings as needed
 }
-
-# SIMPLE_JWT= {
-#     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=60),
-#     "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
-# }
