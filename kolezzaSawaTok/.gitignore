@@ -26,3 +26,5 @@ build/
 # Ignore custom file containing databases
 
 database_config.py
+
+staticfiles/
