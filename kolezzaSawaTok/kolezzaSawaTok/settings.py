@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 import os  # This import was missing
 import logging.config
-import os
+
 from datetime import timedelta
 from pathlib import Path
 from dotenv import load_dotenv, find_dotenv
