@@ -149,13 +149,6 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 
-# Auth0 Configuration
-
-AUTH0_CLIENT_ID = 'w7BRXseEalf4dvOjNteOt9ablWiMFida'
-AUTH0_CLIENT_SECRET = 'cOTJPEVGslBksFPylG4JYa-L7Nr_FtSRPKKuzJ4dpc710vZQPx9jg2efXEoNoVal'
-AUTH0_DOMAIN = 'dev-wzcih6r6mtijgxr1.us.auth0.com'
-REDIRECT_URI = "https://sawatok-928bcdb582b7.herokuapp.com/callback"
-
 # REST framework settings
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": [
@@ -170,6 +163,3 @@ SIMPLE_JWT = {
     'AUTH_COOKIE_PATH': '/',        # Cookie available site-wide
     'AUTH_COOKIE_SAMESITE': 'Lax',  # Adjust SameSite settings as needed
 }
-
-# Activate Django-Heroku.
-django_heroku.settings(locals())
