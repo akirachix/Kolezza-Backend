@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 import os  # This import was missing
 import logging.config
+import dj_database_url
+import os
 
 from datetime import timedelta
 from pathlib import Path
@@ -109,11 +111,11 @@ WSGI_APPLICATION = "kolezzaSawaTok.wsgi.application"
 #     }
 # }
 
+DATABASE_URL = os.getenv("DATABASE_URL")
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
-    }
+    'default': dj_database_url.config(
+        default=os.getenv('DATABASE_URL')
+    )
 }
 
 # Password validation
@@ -141,14 +143,18 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 STATIC_URL = "/static/"
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 # Default primary key field type
-DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+# DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
-# Auth0 settings
-AUTH0_CLIENT_ID = os.getenv("AUTH0_CLIENT_ID")
-AUTH0_CLIENT_SECRET = os.getenv("AUTH0_CLIENT_SECRET")
-AUTH0_DOMAIN = os.getenv("AUTH0_DOMAIN")
-REDIRECT_URI = os.getenv("REDIRECT_URI")
+
+# Auth0 Configuration
+
+AUTH0_CLIENT_ID = 'w7BRXseEalf4dvOjNteOt9ablWiMFida'
+AUTH0_CLIENT_SECRET = 'cOTJPEVGslBksFPylG4JYa-L7Nr_FtSRPKKuzJ4dpc710vZQPx9jg2efXEoNoVal'
+AUTH0_DOMAIN = 'dev-wzcih6r6mtijgxr1.us.auth0.com'
+REDIRECT_URI = "https://sawatok-928bcdb582b7.herokuapp.com/callback"
 
 # REST framework settings
 REST_FRAMEWORK = {
@@ -164,3 +170,6 @@ SIMPLE_JWT = {
     'AUTH_COOKIE_PATH': '/',        # Cookie available site-wide
     'AUTH_COOKIE_SAMESITE': 'Lax',  # Adjust SameSite settings as needed
 }
+
+# Activate Django-Heroku.
+django_heroku.settings(locals())
