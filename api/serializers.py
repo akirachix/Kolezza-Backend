@@ -10,6 +10,7 @@ from level_of_stuttering.models import LevelOfStuttering
 from session.models import Session
 # Other serializers for related models
 
+
 class SessionSerializer(serializers.ModelSerializer):
     class Meta:
         '''Meta class to define model-specific settings for the serializer'''

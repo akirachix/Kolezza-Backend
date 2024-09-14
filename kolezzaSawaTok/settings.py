@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 import os  # This import was missing
 import logging.config
+import dj_database_url
+import os
 
 from datetime import timedelta
 from pathlib import Path
@@ -109,12 +111,21 @@ WSGI_APPLICATION = "kolezzaSawaTok.wsgi.application"
 #     }
 # }
 
+DATABASE_URL = os.getenv("DATABASE_URL")
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
-    }
+    'default': dj_database_url.config(
+        default=os.getenv('DATABASE_URL')
+    )
 }
+
+# Fallback for local development and test environments
+if not os.getenv('DATABASE_URL'):
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
@@ -131,6 +142,13 @@ AUTH_PASSWORD_VALIDATORS = [
         "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
     },
 ]
+# Auth0 Configuration
+
+AUTH0_DOMAIN = os.environ.get("AUTH0_DOMAIN","")
+AUTH0_CLIENT_ID = os.environ.get("AUTH0_CLIENT_ID","")
+AUTH0_CLIENT_SECRET = os.environ.get("AUTH0_CLIENT_SECRET","")
+# Redirect URI
+REDIRECT_URI = os.environ.get("REDIRECT_URI","")
 
 # Internationalization
 LANGUAGE_CODE = "en-us"
@@ -141,14 +159,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 STATIC_URL = "/static/"
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 # Default primary key field type
-DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
-
-# Auth0 settings
-AUTH0_CLIENT_ID = os.getenv("AUTH0_CLIENT_ID")
-AUTH0_CLIENT_SECRET = os.getenv("AUTH0_CLIENT_SECRET")
-AUTH0_DOMAIN = os.getenv("AUTH0_DOMAIN")
-REDIRECT_URI = os.getenv("REDIRECT_URI")
 
 # REST framework settings
 REST_FRAMEWORK = {

@@ -11,10 +11,21 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: Set up Python environment
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.11
+
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+
       - name: Set up Git remote for Heroku
         run: |
           git remote -v
           git remote add heroku https://git.heroku.com/sawatok.git || echo "Heroku remote already exists"
+
 
       - name: Deploy to Heroku
         uses: akhileshns/heroku-deploy@v3.13.15
