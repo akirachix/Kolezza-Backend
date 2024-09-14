@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     "users",
     "child_progress",
     "rest_framework.authtoken",
+    "drf_yasg",
 ]
 
 AUTHENTICATION_BACKENDS = ( 'django.contrib.auth.backends.ModelBackend',)
@@ -173,3 +174,19 @@ SIMPLE_JWT = {
     'AUTH_COOKIE_PATH': '/',        # Cookie available site-wide
     'AUTH_COOKIE_SAMESITE': 'Lax',  # Adjust SameSite settings as needed
 }
+
+SWAGGER_SETTINGS = {
+    'DEFAULT_AUTO_SCHEMA_CLASS': 'drf_yasg.inspectors.SwaggerAutoSchema',
+    'USE_SESSION_AUTH': False,  # Use token auth instead of session auth
+    'SECURITY_DEFINITIONS': {
+        'Bearer': {
+            'type': 'apiKey',
+            'name': 'Authorization',
+            'in': 'header'
+        }
+    },
+    'REFETCH_SCHEMA_WITH_AUTH': True,
+    'REFETCH_SCHEMA_ON_LOGOUT': True,
+    'PERSIST_AUTH': True,
+}
+
