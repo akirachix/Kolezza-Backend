@@ -13,8 +13,6 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 import os  # This import was missing
 import logging.config
 import dj_database_url
-import os
-
 from datetime import timedelta
 from pathlib import Path
 from dotenv import load_dotenv, find_dotenv
@@ -58,10 +56,8 @@ INSTALLED_APPS = [
     "child_progress",
     "rest_framework.authtoken",
 ]
+
 AUTHENTICATION_BACKENDS = ( 'django.contrib.auth.backends.ModelBackend',)
-
-
-
 AUTH_USER_MODEL = "users.User"
 
 # Middleware configuration
@@ -147,7 +143,6 @@ AUTH_PASSWORD_VALIDATORS = [
 AUTH0_DOMAIN = os.environ.get("AUTH0_DOMAIN","")
 AUTH0_CLIENT_ID = os.environ.get("AUTH0_CLIENT_ID","")
 AUTH0_CLIENT_SECRET = os.environ.get("AUTH0_CLIENT_SECRET","")
-# Redirect URI
 REDIRECT_URI = os.environ.get("REDIRECT_URI","")
 
 # Internationalization
@@ -160,6 +155,8 @@ USE_TZ = True
 STATIC_URL = "/static/"
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+
 # Default primary key field type
 
 # REST framework settings
