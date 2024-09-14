@@ -1,4 +1,5 @@
 name: Django CI/CD
+
 on:
   push:
     branches:
@@ -8,31 +9,52 @@ on:
     branches:
       - main
       - staging
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+
       - name: Set up Python
         uses: actions/setup-python@v3
         with:
           python-version: '3.10'
-      # Updated Install dependencies step to clone the repository and checkout specific branch
-      - name: Install Dependencies 
+
+      - name: Install Dependencies
         run: |
-          pip install -r kolezzaSawaTok/requirements.txt
+          pip install -r requirements.txt
+
       - name: Install Black
         run: |
           pip install black
+
       - name: Check code formatting with Black
         id: action_black
         run: |
           black .
+
+      - name: List files
+        run: ls -R
+
       - name: Run migrations
+        env:
+          AUTH0_CLIENT_ID: ${{ secrets.AUTH0_CLIENT_ID }}
+          AUTH0_CLIENT_SECRET: ${{ secrets.AUTH0_CLIENT_SECRET }}
+          AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
+          REDIRECT_URI: ${{ secrets.REDIRECT_URI }}
+
+
+
         run: |
-          python kolezzaSawaTok/manage.py migrate
+          python manage.py migrate
+
       - name: Run tests
+        env:
+          AUTH0_CLIENT_ID: ${{ secrets.AUTH0_CLIENT_ID }}
+          AUTH0_CLIENT_SECRET: ${{ secrets.AUTH0_CLIENT_SECRET }}
+          AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
+          REDIRECT_URI: ${{ secrets.REDIRECT_URI }}
         run: |
-          python kolezzaSawaTok/manage.py test
-    
+          python manage.py test
