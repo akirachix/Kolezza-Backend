@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 import os  # This import was missing
-import logging.config
 import dj_database_url
 from datetime import timedelta
 from pathlib import Path
@@ -36,6 +35,11 @@ SECRET_KEY = os.getenv("SECRET_KEY", "your-default-secret-key")
 DEBUG = os.getenv("DEBUG", "True") == "True"
 ALLOWED_HOSTS = ["*"]
 
+SESSION_COOKIE_SECURE = True
+CRSF_COOKIE_SECURE = True
+
+LOGIN_URL = '/auth/login/'
+
 # Application definition
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -58,7 +62,10 @@ INSTALLED_APPS = [
     "drf_yasg",
 ]
 
-AUTHENTICATION_BACKENDS = ( 'django.contrib.auth.backends.ModelBackend',)
+AUTHENTICATION_BACKENDS = [
+     'django.contrib.auth.backends.ModelBackend',
+     ]
+
 AUTH_USER_MODEL = "users.User"
 
 # Middleware configuration
@@ -73,6 +80,8 @@ MIDDLEWARE = [
     "whitenoise.middleware.WhiteNoiseMiddleware",
     
 ]
+
+CSRF_TRUSTED_ORIGINS = []
 
 ROOT_URLCONF = "kolezzaSawaTok.urls"
 
@@ -96,6 +105,8 @@ TEMPLATES = [
 WSGI_APPLICATION = "kolezzaSawaTok.wsgi.application"
 
 
+load_dotenv()
+
 # Database configuration
 # DATABASES = {
 #     "default": {
@@ -108,12 +119,12 @@ WSGI_APPLICATION = "kolezzaSawaTok.wsgi.application"
 #     }
 # }
 
-DATABASE_URL = os.getenv("DATABASE_URL")
-DATABASES = {
-    'default': dj_database_url.config(
-        default=os.getenv('DATABASE_URL')
-    )
-}
+# DATABASE_URL = os.getenv("DATABASE_URL")
+# DATABASES = {
+#     'default': dj_database_url.config(
+#         default=os.getenv('DATABASE_URL')
+#     )
+# }
 
 # Fallback for local development and test environments
 if not os.getenv('DATABASE_URL'):
