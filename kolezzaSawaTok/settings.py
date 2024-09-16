@@ -119,6 +119,13 @@ load_dotenv()
 #     }
 # }
 
+DATABASE_URL = os.getenv("DATABASE_URL")
+DATABASES = {
+    'default': dj_database_url.config(
+        default=os.getenv('DATABASE_URL')
+    )
+}
+
 # Fallback for local development and test environments
 if not os.getenv('DATABASE_URL'):
     DATABASES = {
