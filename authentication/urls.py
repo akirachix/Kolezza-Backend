@@ -13,6 +13,7 @@ urlpatterns = [
     path("login/", views.login, name="login"),
     path("callback/", views.callback, name="callback"),
     path("logout/", views.logout, name="logout"),
+    path("ssologin/", views.loginSSO, name="login_sso"),
     path("", views.index, name="index"),
     path("register/", views.register, name="register"),
     path('generate_token/', views.generate_token, name='generate_token')

@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 import os  # This import was missing
-import logging.config
 import dj_database_url
 from datetime import timedelta
 from pathlib import Path
@@ -36,6 +35,11 @@ SECRET_KEY = os.getenv("SECRET_KEY", "your-default-secret-key")
 DEBUG = os.getenv("DEBUG", "True") == "True"
 ALLOWED_HOSTS = ["*"]
 
+SESSION_COOKIE_SECURE = True
+CRSF_COOKIE_SECURE = True
+
+LOGIN_URL = '/auth/login/'
+
 # Application definition
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -55,9 +59,13 @@ INSTALLED_APPS = [
     "users",
     "child_progress",
     "rest_framework.authtoken",
+    "drf_yasg",
 ]
 
-AUTHENTICATION_BACKENDS = ( 'django.contrib.auth.backends.ModelBackend',)
+AUTHENTICATION_BACKENDS = [
+     'django.contrib.auth.backends.ModelBackend',
+     ]
+
 AUTH_USER_MODEL = "users.User"
 
 # Middleware configuration
@@ -72,6 +80,8 @@ MIDDLEWARE = [
     "whitenoise.middleware.WhiteNoiseMiddleware",
     
 ]
+
+CSRF_TRUSTED_ORIGINS = []
 
 ROOT_URLCONF = "kolezzaSawaTok.urls"
 
@@ -95,6 +105,8 @@ TEMPLATES = [
 WSGI_APPLICATION = "kolezzaSawaTok.wsgi.application"
 
 
+load_dotenv()
+
 # Database configuration
 # DATABASES = {
 #     "default": {
@@ -107,12 +119,12 @@ WSGI_APPLICATION = "kolezzaSawaTok.wsgi.application"
 #     }
 # }
 
-DATABASE_URL = os.getenv("DATABASE_URL")
-DATABASES = {
-    'default': dj_database_url.config(
-        default=os.getenv('DATABASE_URL')
-    )
-}
+# DATABASE_URL = os.getenv("DATABASE_URL")
+# DATABASES = {
+#     'default': dj_database_url.config(
+#         default=os.getenv('DATABASE_URL')
+#     )
+# }
 
 # Fallback for local development and test environments
 if not os.getenv('DATABASE_URL'):
@@ -173,3 +185,19 @@ SIMPLE_JWT = {
     'AUTH_COOKIE_PATH': '/',        # Cookie available site-wide
     'AUTH_COOKIE_SAMESITE': 'Lax',  # Adjust SameSite settings as needed
 }
+
+SWAGGER_SETTINGS = {
+    'DEFAULT_AUTO_SCHEMA_CLASS': 'drf_yasg.inspectors.SwaggerAutoSchema',
+    'USE_SESSION_AUTH': False,  # Use token auth instead of session auth
+    'SECURITY_DEFINITIONS': {
+        'Bearer': {
+            'type': 'apiKey',
+            'name': 'Authorization',
+            'in': 'header'
+        }
+    },
+    'REFETCH_SCHEMA_WITH_AUTH': True,
+    'REFETCH_SCHEMA_ON_LOGOUT': True,
+    'PERSIST_AUTH': True,
+}
+
