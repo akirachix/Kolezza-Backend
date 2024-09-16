@@ -22,7 +22,7 @@ import django_heroku
 # Load environment definition file
 ENV_FILE = find_dotenv()
 if ENV_FILE:
-    load_dotenv(ENV_FILE)
+    load_dotenv( ENV_FILE )
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
