@@ -105,7 +105,7 @@ TEMPLATES = [
 WSGI_APPLICATION = "kolezzaSawaTok.wsgi.application"
 
 
-load_dotenv()
+# load_dotenv()
 
 # Database configuration
 # DATABASES = {
