@@ -81,7 +81,6 @@ MIDDLEWARE = [
     
 ]
 
-CSRF_TRUSTED_ORIGINS = []
 
 ROOT_URLCONF = "kolezzaSawaTok.urls"
 
