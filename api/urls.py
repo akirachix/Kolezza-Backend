@@ -1,4 +1,8 @@
-from django.urls import path
+from django.urls import path, re_path
+from drf_yasg.views import get_schema_view
+from drf_yasg import openapi
+from rest_framework import permissions
+
 from .views import SessionListView
 from .views import ChildProgressListView, ChildProgressDetailView
 from .views import SpeechTherapistDetailView, ChildManagementDetailView
@@ -37,7 +41,26 @@ identified by the session_id. The session_id is captured from the URL and passed
 The view is named 'session-detail' for URL reversal purposes.'''
 
 # URL patterns for user-related views
+
+
+schema_view = get_schema_view(
+    openapi.Info(
+        title="KolezzaSawaTok API",
+        default_version='v1',
+        description="API documentation for the KolezzaSawaTok project",
+        terms_of_service="https://sawatok-928bcdb582b7.herokuapp.com/auth/",
+        contact=openapi.Contact(email="christinneakinyi@gmail.com"),
+        license=openapi.License(name="BSD License"),
+    ),
+    public=True,
+    permission_classes=(permissions.AllowAny,),
+)
+
 urlpatterns = [
+    re_path(r'^swagger(?P<format>\.json|\.yaml)$', schema_view.without_ui(cache_timeout=0), name='schema-json'),
+    path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
+    path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
+    
     # URL pattern for retrieving, updating, or deleting a specific user by ID
     path("user/<int:id>/", UserDetailView.as_view(), name="user_detail_view"),
     # URL pattern for listing all users
