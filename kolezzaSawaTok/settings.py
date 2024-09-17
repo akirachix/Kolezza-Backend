@@ -11,10 +11,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 import os  # This import was missing
-import logging.config
 import dj_database_url
-import os
-
 from datetime import timedelta
 from pathlib import Path
 from dotenv import load_dotenv, find_dotenv
@@ -25,7 +22,7 @@ import django_heroku
 # Load environment definition file
 ENV_FILE = find_dotenv()
 if ENV_FILE:
-    load_dotenv(ENV_FILE)
+    load_dotenv( ENV_FILE )
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -37,6 +34,11 @@ TEMPLATE_DIR = os.path.join(BASE_DIR, "kolezza_app", "templates")
 SECRET_KEY = os.getenv("SECRET_KEY", "your-default-secret-key")
 DEBUG = os.getenv("DEBUG", "True") == "True"
 ALLOWED_HOSTS = ["*"]
+
+SESSION_COOKIE_SECURE = True
+CRSF_COOKIE_SECURE = True
+
+LOGIN_URL = '/auth/login/'
 
 # Application definition
 INSTALLED_APPS = [
@@ -57,10 +59,12 @@ INSTALLED_APPS = [
     "users",
     "child_progress",
     "rest_framework.authtoken",
+    "drf_yasg",
 ]
-AUTHENTICATION_BACKENDS = ( 'django.contrib.auth.backends.ModelBackend',)
 
-
+AUTHENTICATION_BACKENDS = [
+     'django.contrib.auth.backends.ModelBackend',
+     ]
 
 AUTH_USER_MODEL = "users.User"
 
@@ -76,6 +80,8 @@ MIDDLEWARE = [
     "whitenoise.middleware.WhiteNoiseMiddleware",
     
 ]
+
+CSRF_TRUSTED_ORIGINS = []
 
 ROOT_URLCONF = "kolezzaSawaTok.urls"
 
@@ -98,6 +104,8 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "kolezzaSawaTok.wsgi.application"
 
+
+load_dotenv()
 
 # Database configuration
 # DATABASES = {
@@ -147,7 +155,6 @@ AUTH_PASSWORD_VALIDATORS = [
 AUTH0_DOMAIN = os.environ.get("AUTH0_DOMAIN","")
 AUTH0_CLIENT_ID = os.environ.get("AUTH0_CLIENT_ID","")
 AUTH0_CLIENT_SECRET = os.environ.get("AUTH0_CLIENT_SECRET","")
-# Redirect URI
 REDIRECT_URI = os.environ.get("REDIRECT_URI","")
 
 # Internationalization
@@ -160,6 +167,8 @@ USE_TZ = True
 STATIC_URL = "/static/"
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+
 # Default primary key field type
 
 # REST framework settings
@@ -176,3 +185,19 @@ SIMPLE_JWT = {
     'AUTH_COOKIE_PATH': '/',        # Cookie available site-wide
     'AUTH_COOKIE_SAMESITE': 'Lax',  # Adjust SameSite settings as needed
 }
+
+SWAGGER_SETTINGS = {
+    'DEFAULT_AUTO_SCHEMA_CLASS': 'drf_yasg.inspectors.SwaggerAutoSchema',
+    'USE_SESSION_AUTH': False,  # Use token auth instead of session auth
+    'SECURITY_DEFINITIONS': {
+        'Bearer': {
+            'type': 'apiKey',
+            'name': 'Authorization',
+            'in': 'header'
+        }
+    },
+    'REFETCH_SCHEMA_WITH_AUTH': True,
+    'REFETCH_SCHEMA_ON_LOGOUT': True,
+    'PERSIST_AUTH': True,
+}
+
