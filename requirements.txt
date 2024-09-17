@@ -25,6 +25,8 @@ requests==2.32.3
 requests-oauthlib==2.0.0
 oauthlib==3.2.2
 cryptography==39.0.1
+python-dotenv==0.19.2
+
 
 # Utilities
 cachetools==5.5.0
