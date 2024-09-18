@@ -35,3 +35,6 @@ cachetools==5.5.0
 urllib3==2.2.2
 attrs==21.2.0
 charset-normalizer==3.3.2
+
+# CORS
+django-cors-headers==4.4.0
