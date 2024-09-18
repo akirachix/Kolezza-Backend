@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "corsheaders",
     "speech_therapist",
     "child_management",
     "rest_framework",
@@ -60,6 +61,7 @@ INSTALLED_APPS = [
     "child_progress",
     "rest_framework.authtoken",
     "drf_yasg",
+    
 ]
 
 AUTHENTICATION_BACKENDS = [
@@ -72,6 +74,7 @@ AUTH_USER_MODEL = "users.User"
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -81,7 +84,8 @@ MIDDLEWARE = [
     
 ]
 
-CSRF_TRUSTED_ORIGINS = []
+CORS_ALLOW_ALL_ORIGINS = True
+
 
 ROOT_URLCONF = "kolezzaSawaTok.urls"
 
@@ -192,7 +196,7 @@ SWAGGER_SETTINGS = {
     'SECURITY_DEFINITIONS': {
         'Bearer': {
             'type': 'apiKey',
-            'name': 'Authorization',
+            'name':  'Authorization',
             'in': 'header'
         }
     },
