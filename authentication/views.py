@@ -170,16 +170,3 @@ def register(request):
 
     # Render the registration form page
     return render(request, "authentication/register.html", {"form": form})
-
-
-@csrf_exempt
-def generate_token(request):
-
-    user,created =User.objects.get_or_create(username=' ')
-
-    refresh = RefreshToken.for_user(user)
-
-    return JsonResponse({
-        'access':str(refresh.access_token),
-        'refresh':str(refresh)
-    })
