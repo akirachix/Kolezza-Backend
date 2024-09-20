@@ -23,6 +23,7 @@ class ChildProgress(models.Model):
     id = models.AutoField(primary_key=True)
     started_module_at = models.DateField()
     finished_module_at = models.DateField()
+    frequency = models.FloatField()
     current_level_of_stuttering_id = models.ForeignKey(
         LevelOfStuttering, on_delete=models.CASCADE,
     )
