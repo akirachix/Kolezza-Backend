@@ -18,6 +18,7 @@ from .views import (
     LevelOfStutteringDetailView,
     GuardianListCreateView,
     GuardianDetailView,
+    CurrentUserView,
 )
 from .views import SessionListView
 '''Maps the URL path 'sessions/' to the SessionListView view.
@@ -83,6 +84,7 @@ urlpatterns = [
     path("guardians/", GuardianListCreateView.as_view(), name="guardians-list-create"),
     path("guardians/all/", GuardianListAllView.as_view(), name="guardians-list-all"),
     path("guardian/<int:id>/", GuardianDetailView.as_view(), name="guardian-detail"),
+    path('users/me/', CurrentUserView.as_view(), name='user-current'), 
     # Route for listing all child modules; mapped to the ChildModuleListView
     path(
         "child_modules/", ChildModuleListView.as_view(), name="child_module_list_view"
