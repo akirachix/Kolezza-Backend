@@ -16,7 +16,7 @@ from django.core.exceptions import ValidationError
 class Speech_Therapist(models.Model):
     id = models.AutoField(primary_key=True)
     hospital_name = models.CharField(max_length=28)
-    profile_picture= models.ImageField(upload_to='profile_pictures/', null=True, blank=True)
+    profile_picture= models.ImageField( upload_to='profile_pictures/', null=True, blank=True)
     phone_number=models.CharField(max_length = 15)
     is_deleted = models.BooleanField(default=False)
     updated_at = models.DateTimeField(null=True, blank=True)
