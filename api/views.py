@@ -587,6 +587,13 @@ class UserListView(APIView):
 
 # UserDetailView Class:
 # Handles operations for a specific user identified by ID.
+class CurrentUserView(APIView):
+    permission_classes = [AllowAny] 
+
+    def get(self, request):
+        user = request.user  
+        serializer = UserSerializer(user)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 class UserDetailView(APIView):
 
     # GET Method: Retrieves a specific user by ID, returns user data or errors.
@@ -689,28 +696,33 @@ class YourProtectedView(APIView):
 
 class LoginView(APIView):
     permission_classes = [AllowAny]
+    
     def post(self, request):
         username = request.data.get('username')
         password = request.data.get('password')
-        # Check if username and password are provided
+        
         if not username or not password:
             return Response({'error': 'Please provide both username and password'}, status=400)
-        # Authenticate the user using the username
+        
         user = authenticate(request, username=username, password=password)
-        # Check if the user was authenticated successfully
+        
         if user:
-            # Generate JWT tokens but do not include them in the response
             refresh = RefreshToken.for_user(user)
-            # Set the access token in an HTTP-only cookie
             response = Response({
                 'message': 'Login successful',
+                'access_token': str(refresh.access_token),  # Return access token
+                'refresh_token': str(refresh), 
+                'userId':user.id,
+                'role': user.role 
             }, status=status.HTTP_200_OK)
+            
+            # Optionally set the token in the cookie
             response.set_cookie(
                 key=settings.SIMPLE_JWT['AUTH_COOKIE'],
                 value=str(refresh.access_token),
-                httponly=True,  # Prevent client-side JavaScript from accessing the token
-                secure=True,  # Ensure it's only sent over HTTPS (set to False in development)
-                samesite='Lax',  # Adjust the SameSite policy as needed
+                httponly=True,
+                secure=False,  # Set to True for production
+                samesite='Lax',
             )
             return response
         else:
