@@ -23,9 +23,17 @@ class ChildProgress(models.Model):
     id = models.AutoField(primary_key=True)
     started_module_at = models.DateField()
     finished_module_at = models.DateField()
+    frequency =models.FloatField(null=True, blank=True)
     current_level_of_stuttering_id = models.ForeignKey(
         LevelOfStuttering, on_delete=models.CASCADE,
     )
+    
+    def time_taken(self):
+        # Calculate the time difference between finished and started module
+        if self.finished_module_at and self.started_module_at:
+            time_difference = self.finished_module_at - self.started_module_at
+            return time_difference.days
+        return None
     def clean(self):
         """Ensure finished_module_at is not before started_module_at."""
         if self.started_module_at and self.finished_module_at:
