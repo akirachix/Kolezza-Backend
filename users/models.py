@@ -5,21 +5,35 @@ from django.contrib.auth.models import (
     PermissionsMixin,
 )
 
+import users
+
 class MyUserManager(BaseUserManager):
     def create_user(self, email, username, password=None, **extra_fields):
+        print("Extra fields received:", extra_fields)  
+
         if not email:
             raise ValueError("The Email field must be set")
         email = self.normalize_email(email)
         user = self.model(email=email, username=username, **extra_fields)
-        user.set_password(password)  # Hash the password
+        user.set_password(password)
         user.save(using=self._db)
         return user
 
     def create_superuser(self, email, username, password=None, **extra_fields):
-        extra_fields.setdefault("is_staff", True)
-        extra_fields.setdefault("is_superuser", True)
-        extra_fields.setdefault("role", "superadmin")  # Ensure role is set to superadmin
-        return self.create_user(email, username, password, **extra_fields)
+       extra_fields.setdefault("is_staff", True)
+       extra_fields.setdefault("is_superuser", True)
+       extra_fields.setdefault("role", "superadmin")
+    
+       user = self.create_user(email, username, password, **extra_fields)
+
+       if user:
+         print("User created:", user.first_name, user.last_name)  
+       else:
+        print("User creation failed.") 
+
+       return user
+
+
 
 class User(AbstractBaseUser, PermissionsMixin):
     ROLE_CHOICES = [
@@ -32,7 +46,6 @@ class User(AbstractBaseUser, PermissionsMixin):
     last_name = models.CharField(max_length=16, blank=True, null=True)
     email = models.EmailField(unique=True, blank=True, null=True)
     role = models.CharField(max_length=20, choices=ROLE_CHOICES)
-    # Increase max_length to 128 for password field to accommodate hashed passwords
     password = models.CharField(max_length=128)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -40,7 +53,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     USERNAME_FIELD = "username"
-    REQUIRED_FIELDS = ["email"]  # Required fields when creating a user
+    REQUIRED_FIELDS = ["email"]  
     objects = MyUserManager()
 
     def save(self, *args, **kwargs):
@@ -60,6 +73,6 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     class Meta:
         permissions = [
-            ("can_add_user", "Can add user"),  # Renamed to avoid conflict
+            ("can_add_user", "Can add user"),  
         ]
 

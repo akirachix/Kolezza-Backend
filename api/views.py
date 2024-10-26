@@ -24,6 +24,7 @@ from users.permissions import IsAuthenticatedAndHasPermission
 from rest_framework.authtoken.models import Token
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.conf import settings
+from rest_framework import generics
 
 
 logger = logging.getLogger('session')
@@ -130,14 +131,12 @@ logger = logging.getLogger(__name__)
 
 """View to list all speech therapists"""
 """Fetch all speech therapists"""
-class SpeechTherapistListView(APIView):
-   def get(self, request):
-    
-       logger.info("Fetching all speech therapists.")
-       speech_therapists = Speech_Therapist.objects.all() 
-       serializer = SpeechTherapistSerializer(speech_therapists, many=True) 
-       logger.debug("Fetched speech therapists: %s", serializer.data) 
-       return Response({'speech therapists': serializer.data}) 
+class SpeechTherapistListView(generics.ListAPIView):
+    """
+    View to list all Speech Therapists.
+    """
+    queryset = Speech_Therapist.objects.all()
+    serializer_class = SpeechTherapistSerializer
   
 """Get a single therapist by ID"""
 class SpeechTherapistDetailView(APIView):
@@ -189,16 +188,12 @@ class SpeechTherapistDetailView(APIView):
 
   
 """Register a new therapist"""
-class RegisterTherapistView(APIView):
-   def post(self, request):
-       logger.info("Registering new speech therapist.") 
-       serializer = SpeechTherapistSerializer(data=request.data) 
-       if serializer.is_valid():
-           serializer.save()
-           logger.info("Therapist registered successfully: %s", serializer.data) 
-           return Response(serializer.data, status=status.HTTP_201_CREATED)
-       logger.warning("Validation errors during therapist registration: %s", serializer.errors) 
-       return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+class SpeechTherapistCreateView(generics.CreateAPIView):
+    """
+    View to create a new Speech Therapist.
+    """
+    queryset = Speech_Therapist.objects.all()
+    serializer_class = SpeechTherapistSerializer
 
 
 """Fetch all children"""
@@ -668,32 +663,6 @@ class YourProtectedView(APIView):
         # Your view logic here
         return Response({"message": "You have access to this view!"})
     
-# class LoginView(APIView):
-#     permission_classes = [AllowAny]
-#     def post(self, request):
-#         username = request.data.get('username')
-#         password = request.data.get('password')
-#         if not username or not password:
-#             return Response({'error': 'Please provide both username and password'}, status=400)
-#         user = authenticate(request, username=username, password=password)
-#         if user:
-#             refresh = RefreshToken.for_user(user)
-#             response = Response({
-#                 'message': 'Login successful',
-#                 'refresh': str(refresh),
-#                 'access': str(refresh.access_token),
-#             }, status=status.HTTP_200_OK)
-#             response.set_cookie(
-#                 key=settings.SIMPLE_JWT['AUTH_COOKIE'], 
-#                 value=str(refresh.access_token),
-#                 httponly=True, 
-#                 secure=True, 
-#                 samesite='Lax',
-#             )
-#             return response
-#         else:
-#             return Response({'error': 'Invalid credentials'}, status=401)
-
 class LoginView(APIView):
     permission_classes = [AllowAny]
     

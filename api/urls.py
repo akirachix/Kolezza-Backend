@@ -7,7 +7,7 @@ from .views import SessionListView
 from .views import ChildProgressListView, ChildProgressDetailView
 from .views import SpeechTherapistDetailView, ChildManagementDetailView
 from .views import SpeechTherapistListView, ChildManagementListView
-from .views import RegisterChildView, RegisterTherapistView
+from .views import RegisterChildView, SpeechTherapistCreateView
 from .views import ChildModuleListView
 from .views import ChildModuleDetailView
 from .views import UserListView, UserDetailView, RegisterView, LoginView
@@ -100,10 +100,10 @@ urlpatterns = [
         SpeechTherapistDetailView.as_view(),
         name="therapist_detail_view",
     ),
-    path("therapists/", SpeechTherapistListView.as_view(), name="therapist_view"),
+    path("therapists/", SpeechTherapistListView.as_view(), name="therapist_list"),
     path(
         "therapist_registration/",
-        RegisterTherapistView.as_view(),
+       SpeechTherapistCreateView.as_view(),
         name="register_therapist_view",
     ),
     path(

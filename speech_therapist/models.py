@@ -2,6 +2,8 @@ from django.db import models
 from django.utils import timezone
 from django.core.exceptions import ValidationError
 
+from kolezzaSawaTok import settings
+
 """This model is for the speech therapist. It represents the data stored in
    our database.
    Save changes to the database
@@ -15,12 +17,15 @@ from django.core.exceptions import ValidationError
 
 class Speech_Therapist(models.Model):
     id = models.AutoField(primary_key=True)
-    hospital_name = models.CharField(max_length=28)
-    profile_picture= models.ImageField(upload_to='profile_pictures/', null=True, blank=True)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,related_name='speech_therapists')
+    first_name = models.CharField(max_length=16, blank=True, null=True)
+    last_name = models.CharField(max_length=16, blank=True, null=True)
+    email = models.EmailField(unique=True, blank=True, null=True)
+    hospital_name = models.CharField(max_length=28)    
     phone_number=models.CharField(max_length = 15)
     is_deleted = models.BooleanField(default=False)
     updated_at = models.DateTimeField(null=True, blank=True)
-    deleted_at = models.DateTimeField(null=True, blank=True)  # Optional field to track deletion time
+    deleted_at = models.DateTimeField(null=True, blank=True) 
 
     def clean(self):
         """Custom validation for the Speech_Therapist model."""
